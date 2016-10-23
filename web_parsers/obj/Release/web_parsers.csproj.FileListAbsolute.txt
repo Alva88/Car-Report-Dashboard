@@ -1,0 +1,11 @@
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\bin\Release\web_parsers.exe.config
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\bin\Release\web_parsers.exe
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\bin\Release\web_parsers.pdb
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\bin\Release\Newtonsoft.Json.dll
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\bin\Release\Newtonsoft.Json.xml
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.F_Main.resources
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.F_Costs.resources
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.Properties.Resources.resources
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.csproj.GenerateResource.Cache
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.exe
+C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.pdb
