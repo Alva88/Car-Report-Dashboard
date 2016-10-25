@@ -21,7 +21,6 @@ namespace web_parsers
                 new DataColumn("Depreciation",typeof(Decimal)),
                 new DataColumn("Fuel",typeof(Decimal)),
             };
-
             dt.Columns.AddRange(columns);
             return dt;
         }

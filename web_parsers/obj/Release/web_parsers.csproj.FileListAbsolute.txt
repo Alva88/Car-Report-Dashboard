@@ -9,3 +9,4 @@ C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\
 C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.csproj.GenerateResource.Cache
 C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.exe
 C:\Users\Andretti\documents\visual studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.pdb
+C:\Users\Andretti\Documents\Visual Studio 2015\Projects\web_parsers\web_parsers\obj\Release\web_parsers.csprojResolveAssemblyReference.cache

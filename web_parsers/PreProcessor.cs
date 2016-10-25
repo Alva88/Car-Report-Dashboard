@@ -198,8 +198,6 @@ namespace web_parsers
             {
                 //Create dataset and build relationship
                 //between totals and breakdown datatables
-
-
                 DataSet dsDataSet = new DataSet();
                 dsDataSet.Tables.Add(dtCostTotals);
                 dsDataSet.Tables.Add(dtCostBreakdown);

@@ -14,7 +14,7 @@ namespace web_parsers
         /// <summary>
         /// Api key used with the url
         /// </summary>
-        public const string UrlKey = "xayj35a45s9a4y7t2z2ncwc9";
+        public const string UrlKey = "ywn9xddxnbdz55pa62d7rth3";
 
         public string RequestModelByMake(string Make)
         {
