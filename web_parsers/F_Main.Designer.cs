@@ -32,6 +32,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Make = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Model = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Trim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Year = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Add = new System.Windows.Forms.Button();
             this.cbMake = new System.Windows.Forms.ComboBox();
@@ -39,16 +40,17 @@
             this.cbYear = new System.Windows.Forms.ComboBox();
             this.tab_byCar = new System.Windows.Forms.TabControl();
             this.tp_ByMake = new System.Windows.Forms.TabPage();
+            this.cbTrim = new System.Windows.Forms.ComboBox();
+            this.txtTrim = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtZip = new System.Windows.Forms.TextBox();
+            this.cbState = new System.Windows.Forms.ComboBox();
             this.lblYear = new System.Windows.Forms.Label();
             this.lblModel = new System.Windows.Forms.Label();
             this.lblMake = new System.Windows.Forms.Label();
             this.btnCompare = new System.Windows.Forms.Button();
-            this.cbState = new System.Windows.Forms.ComboBox();
-            this.txtZip = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             panel1 = new System.Windows.Forms.Panel();
-            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tab_byCar.SuspendLayout();
             this.tp_ByMake.SuspendLayout();
@@ -58,10 +60,9 @@
             // 
             panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            panel1.Controls.Add(this.dataGridView1);
-            panel1.Location = new System.Drawing.Point(12, 149);
+            panel1.Location = new System.Drawing.Point(12, 216);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(514, 119);
+            panel1.Size = new System.Drawing.Size(641, 119);
             panel1.TabIndex = 6;
             // 
             // dataGridView1
@@ -73,23 +74,30 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Make,
             this.Model,
+            this.Trim,
             this.Year});
-            this.dataGridView1.Location = new System.Drawing.Point(4, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 184);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(505, 109);
+            this.dataGridView1.Size = new System.Drawing.Size(632, 148);
             this.dataGridView1.TabIndex = 0;
             // 
             // Make
             // 
             this.Make.HeaderText = "Make";
             this.Make.Name = "Make";
-            this.Make.Width = 150;
             // 
             // Model
             // 
             this.Model.HeaderText = "Model";
             this.Model.Name = "Model";
             this.Model.Width = 150;
+            // 
+            // Trim
+            // 
+            this.Trim.HeaderText = "Trim";
+            this.Trim.MinimumWidth = 10;
+            this.Trim.Name = "Trim";
+            this.Trim.Width = 250;
             // 
             // Year
             // 
@@ -99,9 +107,9 @@
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(284, 64);
+            this.btn_Add.Location = new System.Drawing.Point(360, 61);
             this.btn_Add.Name = "btn_Add";
-            this.btn_Add.Size = new System.Drawing.Size(89, 23);
+            this.btn_Add.Size = new System.Drawing.Size(86, 23);
             this.btn_Add.TabIndex = 0;
             this.btn_Add.Text = "Add";
             this.btn_Add.UseVisualStyleBackColor = true;
@@ -132,24 +140,23 @@
             this.cbYear.Name = "cbYear";
             this.cbYear.Size = new System.Drawing.Size(121, 21);
             this.cbYear.TabIndex = 4;
+            this.cbYear.SelectedIndexChanged += new System.EventHandler(this.cbYear_SelectedIndexChanged);
             // 
             // tab_byCar
             // 
             this.tab_byCar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tab_byCar.Controls.Add(this.tp_ByMake);
-            this.tab_byCar.Location = new System.Drawing.Point(12, 12);
+            this.tab_byCar.Location = new System.Drawing.Point(12, 58);
             this.tab_byCar.Name = "tab_byCar";
             this.tab_byCar.SelectedIndex = 0;
-            this.tab_byCar.Size = new System.Drawing.Size(518, 120);
+            this.tab_byCar.Size = new System.Drawing.Size(645, 120);
             this.tab_byCar.TabIndex = 5;
             // 
             // tp_ByMake
             // 
-            this.tp_ByMake.Controls.Add(this.label2);
-            this.tp_ByMake.Controls.Add(this.label1);
-            this.tp_ByMake.Controls.Add(this.txtZip);
-            this.tp_ByMake.Controls.Add(this.cbState);
+            this.tp_ByMake.Controls.Add(this.cbTrim);
+            this.tp_ByMake.Controls.Add(this.txtTrim);
             this.tp_ByMake.Controls.Add(this.lblYear);
             this.tp_ByMake.Controls.Add(this.lblModel);
             this.tp_ByMake.Controls.Add(this.lblMake);
@@ -160,10 +167,61 @@
             this.tp_ByMake.Location = new System.Drawing.Point(4, 22);
             this.tp_ByMake.Name = "tp_ByMake";
             this.tp_ByMake.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_ByMake.Size = new System.Drawing.Size(510, 94);
+            this.tp_ByMake.Size = new System.Drawing.Size(637, 94);
             this.tp_ByMake.TabIndex = 0;
             this.tp_ByMake.Text = "Selection";
             this.tp_ByMake.UseVisualStyleBackColor = true;
+            // 
+            // cbTrim
+            // 
+            this.cbTrim.FormattingEnabled = true;
+            this.cbTrim.Location = new System.Drawing.Point(12, 63);
+            this.cbTrim.Name = "cbTrim";
+            this.cbTrim.Size = new System.Drawing.Size(328, 21);
+            this.cbTrim.TabIndex = 14;
+            // 
+            // txtTrim
+            // 
+            this.txtTrim.AutoSize = true;
+            this.txtTrim.Location = new System.Drawing.Point(12, 48);
+            this.txtTrim.Name = "txtTrim";
+            this.txtTrim.Size = new System.Drawing.Size(27, 13);
+            this.txtTrim.TabIndex = 13;
+            this.txtTrim.Text = "Trim";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(84, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(22, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Zip";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "State";
+            // 
+            // txtZip
+            // 
+            this.txtZip.Location = new System.Drawing.Point(83, 23);
+            this.txtZip.Name = "txtZip";
+            this.txtZip.Size = new System.Drawing.Size(80, 20);
+            this.txtZip.TabIndex = 9;
+            this.txtZip.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtZip_KeyPress);
+            // 
+            // cbState
+            // 
+            this.cbState.FormattingEnabled = true;
+            this.cbState.Location = new System.Drawing.Point(16, 23);
+            this.cbState.Name = "cbState";
+            this.cbState.Size = new System.Drawing.Size(59, 21);
+            this.cbState.TabIndex = 8;
             // 
             // lblYear
             // 
@@ -195,7 +253,7 @@
             // btnCompare
             // 
             this.btnCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCompare.Location = new System.Drawing.Point(12, 277);
+            this.btnCompare.Location = new System.Drawing.Point(12, 344);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(75, 23);
             this.btnCompare.TabIndex = 7;
@@ -203,60 +261,31 @@
             this.btnCompare.UseVisualStyleBackColor = true;
             this.btnCompare.Click += new System.EventHandler(this.btnCompare_Click);
             // 
-            // cbState
-            // 
-            this.cbState.FormattingEnabled = true;
-            this.cbState.Location = new System.Drawing.Point(12, 64);
-            this.cbState.Name = "cbState";
-            this.cbState.Size = new System.Drawing.Size(121, 21);
-            this.cbState.TabIndex = 8;
-            // 
-            // txtZip
-            // 
-            this.txtZip.Location = new System.Drawing.Point(144, 64);
-            this.txtZip.Name = "txtZip";
-            this.txtZip.Size = new System.Drawing.Size(121, 20);
-            this.txtZip.TabIndex = 9;
-            this.txtZip.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtZip_KeyPress);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "State";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(22, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Zip";
-            // 
             // F_Main
             // 
             this.AccessibleDescription = "";
             this.AccessibleName = "";
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 312);
+            this.ClientSize = new System.Drawing.Size(660, 379);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnCompare);
+            this.Controls.Add(this.label2);
             this.Controls.Add(panel1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tab_byCar);
+            this.Controls.Add(this.txtZip);
+            this.Controls.Add(this.cbState);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "F_Main";
             this.Text = "Car Compare Report";
             this.Load += new System.EventHandler(this.F_Main_Load);
-            panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tab_byCar.ResumeLayout(false);
             this.tp_ByMake.ResumeLayout(false);
             this.tp_ByMake.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -273,13 +302,16 @@
         private System.Windows.Forms.Label lblMake;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnCompare;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Make;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Model;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Year;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtZip;
         private System.Windows.Forms.ComboBox cbState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Make;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Model;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Trim;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Year;
+        private System.Windows.Forms.Label txtTrim;
+        private System.Windows.Forms.ComboBox cbTrim;
     }
 }
 

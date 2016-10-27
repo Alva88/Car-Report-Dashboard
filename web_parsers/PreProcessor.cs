@@ -39,13 +39,12 @@ namespace web_parsers
                 //seperate columns by delimiters
                 string[] ln = row.Split('$');
                 //get style in order to get the cost elements.
-
-                string Style = DataLayer.GetStyle(ln[0], ln[1], ln[2]);
+                string Style = DataLayer.GetStyleID(ln[0], ln[1], ln[3], ln[2]);
 
                 if (Style != null)
                 {
                     //Loading costs for selection, hard coding zip code and state for now.
-                    JObject Costs = DataLayer.GetCosts(ln[0], ln[1], ln[2], Style, State, ZipCode);
+                    JObject Costs = DataLayer.GetCosts(ln[0], ln[1], ln[3], Style, State, ZipCode);
                     if (Costs != null)
                     {
                         //insurance amounts.
@@ -91,7 +90,8 @@ namespace web_parsers
                         DataRow rw = dtCostTotals.NewRow();
                         rw["Make"] = ln[0];
                         rw["Model"] = ln[1];
-                        rw["Year"] = ln[2];
+                        rw["Year"] = ln[3];
+                        rw["Trim"] = ln[2];
                         rw["Insurance"] = insuranceTotal;
                         rw["Maintenance"] = maintenanceTotal;
                         rw["Repairs"] = repairsTotal;
@@ -122,7 +122,11 @@ namespace web_parsers
                         }
                         for (int i = x; i < y; i++)
                         {
-                            dtCostBreakdown.Rows[i]["Year"] = ln[2];
+                            dtCostBreakdown.Rows[i]["Year"] = ln[3];
+                        }
+                        for (int i = x; i < y; i++)
+                        {
+                            dtCostBreakdown.Rows[i]["Trim"] = ln[2];
                         }
 
                         foreach (JToken item in Insurance)
@@ -201,7 +205,7 @@ namespace web_parsers
                 DataSet dsDataSet = new DataSet();
                 dsDataSet.Tables.Add(dtCostTotals);
                 dsDataSet.Tables.Add(dtCostBreakdown);
-                dsDataSet.Relations.Add(new DataRelation("Cost Break Down", new DataColumn[] { dtCostTotals.Columns["Make"], dtCostTotals.Columns["Model"], dtCostTotals.Columns["Year"] }, new DataColumn[] { dtCostBreakdown.Columns["Make"], dtCostBreakdown.Columns["Model"], dtCostBreakdown.Columns["Year"]},false));
+                dsDataSet.Relations.Add(new DataRelation("Cost Break Down", new DataColumn[] { dtCostTotals.Columns["Make"], dtCostTotals.Columns["Model"], dtCostTotals.Columns["Year"], dtCostTotals.Columns["Trim"] }, new DataColumn[] { dtCostBreakdown.Columns["Make"], dtCostBreakdown.Columns["Model"], dtCostBreakdown.Columns["Year"], dtCostBreakdown.Columns["Trim"] },false));
                 dsDataSet.Relations["Cost Break Down"].Nested = true;
 
                 CostCategoriesTotals.Values = dtCostTotals;
@@ -217,6 +221,7 @@ namespace web_parsers
             {
                 dtCostTotals.Dispose();
                 dtCostBreakdown.Dispose();
+                MessageBox.Show("Data not found for selection");
             }
         }
     }

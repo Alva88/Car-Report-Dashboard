@@ -13,6 +13,7 @@ namespace web_parsers
                 new DataColumn("Make",typeof(String)),
                 new DataColumn("Model",typeof(String)),
                 new DataColumn("Year",typeof(String)),
+                new DataColumn("Trim",typeof(String)),
                 new DataColumn("Insurance",typeof(Decimal)),
                 new DataColumn("Maintenance",typeof(Decimal)),
                 new DataColumn("Repairs",typeof(Decimal)),
@@ -33,6 +34,7 @@ namespace web_parsers
                 new DataColumn("Make",typeof(String)),
                 new DataColumn("Model",typeof(String)),
                 new DataColumn("Year",typeof(String)),
+                new DataColumn("Trim",typeof(String)),
                 new DataColumn("Insurance",typeof(Decimal)),
                 new DataColumn("Maintenance",typeof(Decimal)),
                 new DataColumn("Repairs",typeof(Decimal)),
@@ -41,7 +43,6 @@ namespace web_parsers
                 new DataColumn("Depreciation",typeof(Decimal)),
                 new DataColumn("Fuel",typeof(Decimal)),
                 new DataColumn("Taxcredit",typeof(Decimal)),
-                //new DataColumn("Grand Total",typeof(Decimal))
         };
             //Create Grand Total column
             DataColumn Total = new DataColumn();

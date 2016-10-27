@@ -51,7 +51,7 @@ namespace web_parsers
         /// <param name="Model"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public static string GetStyle(string Make, string Model, string Year)
+        public static IEnumerable<JToken> GetStyle(string Make, string Model, string Year)
         {
             var client = new WebClient();
             RequestApiData GetUrl = new RequestApiData();
@@ -60,10 +60,39 @@ namespace web_parsers
             //Load  makes.
             JObject Json = JObject.Parse(Response);
             //load model.
-            string filter = "$.styles[0].id";
-            string Styles = (string)Json.SelectToken(filter);
+            IEnumerable<JToken> Styles = Json.SelectTokens("$.styles[*].name");
             return Styles;
         }
+        /// <summary>
+        /// Get Style ID based on Make, Model, Year, Trim. 
+        /// </summary>
+        /// <param name="Make"></param>
+        /// <param name="Model"></param>
+        /// <param name="Year"></param>
+        /// <param name="Trim"></param>
+        /// <returns></returns>
+        public static string GetStyleID(string Make, string Model, string Year, string Trim)
+        {
+            //string StyleID = "";
+            var client = new WebClient();
+            RequestApiData GetUrl = new RequestApiData();
+            string Url = GetUrl.RequestStyles(Make, Model, Year);
+            string Response = null;
+            try
+            {
+                Response  = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
+            }
+            catch
+            {
+                Console.WriteLine("Data not found on selection" + Make + " " + Model + " " + Year + " " + Trim);
+                return null;
+            }
+            JObject Json = JObject.Parse(Response);
+            string filter = "$.styles[?(@.name ==  '"+ Trim +"')].id";
+            string StyleID = (string)Json.SelectToken(filter);
+            return StyleID;
+        }
+
 
         /// <summary>
         /// Requests total costs

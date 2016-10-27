@@ -61,14 +61,14 @@ namespace web_parsers
         private void btn_Add_Click(object sender, EventArgs e)
         {
             //adds row to datagridview
-            if (cbMake.Text != "" && cbModel.Text != "" && cbYear.Text != "")
+            if (cbMake.Text != "" && cbModel.Text != "" && cbYear.Text != "" && cbTrim.Text != "")
             {
                 try
                 {
                     if (dataGridView1.RowCount == 1)
                     {
-                        this.dataGridView1.Rows.Add(cbMake.Text, cbModel.Text, cbYear.Text);
-                        cbMake.Text = ""; cbModel.Text = ""; cbYear.Text = "";
+                        this.dataGridView1.Rows.Add(cbMake.Text, cbModel.Text, cbTrim.Text, cbYear.Text);
+                        cbMake.Text = ""; cbModel.Text = ""; cbYear.Text = ""; cbTrim.Text = "";
                     }
                     else
                     {
@@ -76,15 +76,15 @@ namespace web_parsers
                         //loop through grid to make sure selection doesn't already exist
                         for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
                         {
-                            if (dataGridView1.Rows[i].Cells[0].Value.ToString() == cbMake.Text && dataGridView1.Rows[i].Cells[1].Value.ToString() == cbModel.Text && dataGridView1.Rows[i].Cells[2].Value.ToString() == cbYear.Text)
+                            if (dataGridView1.Rows[i].Cells[0].Value.ToString() == cbMake.Text && dataGridView1.Rows[i].Cells[1].Value.ToString() == cbModel.Text && dataGridView1.Rows[i].Cells[2].Value.ToString() == cbTrim.Text && dataGridView1.Rows[i].Cells[3].Value.ToString() == cbYear.Text)
                             {
                                 u = true;
                             }
                         }
                         if (u == false)
                         {
-                            this.dataGridView1.Rows.Add(cbMake.Text, cbModel.Text, cbYear.Text);
-                            cbMake.Text = ""; cbModel.Text = ""; cbYear.Text = "";
+                            this.dataGridView1.Rows.Add(cbMake.Text, cbModel.Text, cbTrim.Text, cbYear.Text);
+                            cbMake.Text = ""; cbModel.Text = ""; cbYear.Text = ""; cbTrim.Text = "";
                         }
                     }
                 }
@@ -141,7 +141,7 @@ namespace web_parsers
 
         private void btnCompare_Click(object sender, EventArgs e)
         {
-            if (cbState.Text != null || cbState.Text != "" || txtZip.Text != "")
+            if (cbState.Text != null && cbState.Text != "" && txtZip.Text != "")
             {
                 //build a string with the make, model, and year then a record delimiter.
                 StringBuilder sb = new StringBuilder();
@@ -150,7 +150,7 @@ namespace web_parsers
                     //Check if file exists, if it does, delete it.
                     foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
-                        sb.Append(row.Cells["Make"].Value.ToString() + "$" + row.Cells["Model"].Value.ToString() + "$" + row.Cells["Year"].Value.ToString() + "@");
+                        sb.Append(row.Cells["Make"].Value.ToString() + "$" + row.Cells["Model"].Value.ToString() + "$" + row.Cells["Trim"].Value.ToString()  + "$" +row.Cells["Year"].Value.ToString() + "@");
                     }
                 }
                 catch (Exception ex)
@@ -161,14 +161,40 @@ namespace web_parsers
                 if (sb.ToString() != "")
                 {
                     //trimming off the last uneeded record delimiter and passing result as argument to be parsed and processed.
-                    PreProcessor.ProcessData(sb.ToString().Substring(0, sb.ToString().Length - 1).ToString(),cbState.Text,txtZip.Text);
+                    PreProcessor.ProcessData(sb.ToString().Substring(0, sb.ToString().Length - 1).ToString(), cbState.Text, txtZip.Text);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please enter State and Zip");
             }
         }
 
         private void txtZip_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), "\\d+")) e.Handled = true;
+        }
+
+        private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbYear.Text != "")
+            {
+                try
+                {
+                    //Load years based on selected model.
+                    IEnumerable<JToken> Styles = DataLayer.GetStyle(cbMake.Text, cbModel.Text, cbYear.Text);
+                    cbTrim.Text = "";
+                    cbTrim.Items.Clear();
+                    foreach (JToken item in Styles)
+                    {
+                        cbTrim.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }
