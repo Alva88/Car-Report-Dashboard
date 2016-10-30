@@ -24,7 +24,8 @@ namespace web_parsers
                 Application.OpenForms.OfType<F_Costs>().First().Close();
         }
 
-        public static void ProcessData(string GridData, string State, string ZipCode)
+        //public static void ProcessData(string GridData, string State, string ZipCode)
+        public static void ProcessData(string[] GridData, string[] Location)
         {
             //Free up memory from previously ran queries.
             MemoryDisposal();
@@ -33,8 +34,10 @@ namespace web_parsers
             DataTable dtCostTotals = DataTableCostCategories.CostTotal();
 
             //Split grid data by @
-            string[] lines = GridData.Split('@');
-            foreach (string row in lines)
+            //string[] lines = GridData.Split('@');
+            //string[] lines = prams[0];
+            //foreach (string row in lines)
+            foreach (string row in GridData)
             {
                 //seperate columns by delimiters
                 string[] ln = row.Split('$');
@@ -44,13 +47,13 @@ namespace web_parsers
                 if (Style != null)
                 {
                     //Loading costs for selection, hard coding zip code and state for now.
-                    JObject Costs = DataLayer.GetCosts(ln[0], ln[1], ln[3], Style, State, ZipCode);
+                    JObject Costs = DataLayer.GetCosts(ln[0], ln[1], ln[3], Style, Location[0], Location[1]);
                     if (Costs != null)
                     {
                         //insurance amounts.
                         IEnumerable<JToken> Insurance = Costs.SelectTokens("$.insurance.values");
                         string filter = "$.insurance.total";
-                        float insuranceTotal = (float)Costs.SelectToken(filter);
+                        float insuranceTotal = (float)Costs.SelectToken(filter);                     
 
                         //maintenance amounts
                         IEnumerable<JToken> Maintenance = Costs.SelectTokens("$.maintenance.values");

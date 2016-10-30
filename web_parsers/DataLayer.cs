@@ -21,26 +21,26 @@ namespace web_parsers
 
         public static IEnumerable<JToken> GetModels(string Make)
         {
-                var client = new WebClient();
-                RequestApiData GetUrl = new RequestApiData();
-                string Url = GetUrl.RequestModelByMake(Make);
-                string Response = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
-                //Load  makes.
-                JObject Json = JObject.Parse(Response);
-                //load models
-                IEnumerable<JToken> Models = Json.SelectTokens("$..models[*].name");
+            var client = new WebClient();
+            RequestApiData GetUrl = new RequestApiData();
+            string Url = GetUrl.RequestModelByMake(Make);
+            string Response = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
+            //Load  makes.
+            JObject Json = JObject.Parse(Response);
+            //load models
+            IEnumerable<JToken> Models = Json.SelectTokens("$..models[*].name");
             return Models;
         }
 
-        public static IEnumerable<JToken> GetYearsByModel(string Make,string Model)
+        public static IEnumerable<JToken> GetYearsByModel(string Make, string Model)
         {
             var client = new WebClient();
             RequestApiData GetUrl = new RequestApiData();
-            string Url = GetUrl.RequestYearsByModel(Make,Model);
+            string Url = GetUrl.RequestYearsByModel(Make, Model);
             string Response = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
             //Load years
             JObject Json = JObject.Parse(Response);
-            IEnumerable<JToken> Years = Json.SelectTokens("$.years[*].year");             
+            IEnumerable<JToken> Years = Json.SelectTokens("$.years[*].year");
             return Years;
         }
 
@@ -55,7 +55,7 @@ namespace web_parsers
         {
             var client = new WebClient();
             RequestApiData GetUrl = new RequestApiData();
-            string Url = GetUrl.RequestStyles(Make,Model,Year);
+            string Url = GetUrl.RequestStyles(Make, Model, Year);
             string Response = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
             //Load  makes.
             JObject Json = JObject.Parse(Response);
@@ -80,7 +80,7 @@ namespace web_parsers
             string Response = null;
             try
             {
-                Response  = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
+                Response = client.DownloadString(new Uri(Url + RequestApiData.UrlKey));
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace web_parsers
                 return null;
             }
             JObject Json = JObject.Parse(Response);
-            string filter = "$.styles[?(@.name ==  '"+ Trim +"')].id";
+            string filter = "$.styles[?(@.name ==  '" + Trim + "')].id";
             string StyleID = (string)Json.SelectToken(filter);
             return StyleID;
         }
@@ -116,7 +116,7 @@ namespace web_parsers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("No data found for this particular selection:"+ Make + " / " + Model + " / " + Year + Environment.NewLine + ex);
+                Console.WriteLine("No data found for this particular selection:" + Make + " / " + Model + " / " + Year + Environment.NewLine + ex);
                 JObject obj = null;
                 return obj;
             }

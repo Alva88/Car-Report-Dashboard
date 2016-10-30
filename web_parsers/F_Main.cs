@@ -46,6 +46,10 @@ namespace web_parsers
                 {
                     cbState.Items.Add(arr);
                 }
+
+                //prepopulate location fields
+                cbState.Text = "TX";
+                txtZip.Text = "77375";
             }
             catch (Exception ex)
             {
@@ -97,11 +101,82 @@ namespace web_parsers
 
         private void cbMake_SelectedIndexChanged(object sender, EventArgs e)
         {
+            GetModels();
+        }
+
+        private void cbMake_Leave(object sender, EventArgs e)
+        {
+            GetModels();
+        }
+
+        private void cbModel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetYears();
+        }
+
+        private void cbModel_Leave(object sender, EventArgs e)
+        {
+            GetYears();
+        }
+
+        private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetSyles();
+        }
+
+        private void cbYear_Leave(object sender, EventArgs e)
+        {
+            GetSyles();
+        }
+
+        private void btnCompare_Click(object sender, EventArgs e)
+        {
+            if (cbState.Text != null && cbState.Text != "" && txtZip.Text != "")
+            {
+                //build a string with the make, model, and year then a record delimiter.
+                StringBuilder sb = new StringBuilder();
+                try
+                {
+                    //Check if file exists, if it does, delete it.
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        sb.Append(row.Cells["Make"].Value.ToString() + "$" + row.Cells["Model"].Value.ToString() + "$" + row.Cells["Trim"].Value.ToString() + "$" + row.Cells["Year"].Value.ToString() + "@");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                //if grid data found, continue process.
+                if (sb.ToString() != "")
+                {
+                    //trimming off the last uneeded record delimiter and passing result as argument to be parsed and processed.
+                    //string s = sb.ToString().Substring(0, sb.ToString().Length - 1).ToString();
+                    string[] GridData = sb.ToString().Substring(0, sb.ToString().Length - 1).ToString().Split('@');
+                    string[] Location = { cbState.Text, txtZip.Text };
+                    //PreProcessor.ProcessData(sb.ToString().Substring(0, sb.ToString().Length - 1).ToString(), cbState.Text, txtZip.Text);
+                    PreProcessor.ProcessData(GridData,Location);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter State and Zip");
+            }
+        }
+
+        private void txtZip_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), "\\d+")) e.Handled = true;
+        }
+
+        public void GetModels()
+        {
             if (cbMake.Text != "")
             {
                 try
                 {
                     //Load models based on selected make.
+                    //IEnumerable<JToken> Models = DataLayer.GetModels(cbMake.Text);
                     IEnumerable<JToken> Models = DataLayer.GetModels(cbMake.Text);
                     cbModel.Text = "";
                     cbModel.Items.Clear();
@@ -117,7 +192,7 @@ namespace web_parsers
             }
         }
 
-        private void cbModel_SelectedIndexChanged(object sender, EventArgs e)
+        public void GetYears()
         {
             if (cbModel.Text != "")
             {
@@ -139,43 +214,7 @@ namespace web_parsers
             }
         }
 
-        private void btnCompare_Click(object sender, EventArgs e)
-        {
-            if (cbState.Text != null && cbState.Text != "" && txtZip.Text != "")
-            {
-                //build a string with the make, model, and year then a record delimiter.
-                StringBuilder sb = new StringBuilder();
-                try
-                {
-                    //Check if file exists, if it does, delete it.
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
-                    {
-                        sb.Append(row.Cells["Make"].Value.ToString() + "$" + row.Cells["Model"].Value.ToString() + "$" + row.Cells["Trim"].Value.ToString()  + "$" +row.Cells["Year"].Value.ToString() + "@");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                //if grid data found, continue process.
-                if (sb.ToString() != "")
-                {
-                    //trimming off the last uneeded record delimiter and passing result as argument to be parsed and processed.
-                    PreProcessor.ProcessData(sb.ToString().Substring(0, sb.ToString().Length - 1).ToString(), cbState.Text, txtZip.Text);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please enter State and Zip");
-            }
-        }
-
-        private void txtZip_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), "\\d+")) e.Handled = true;
-        }
-
-        private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
+        public void GetSyles()
         {
             if (cbYear.Text != "")
             {
@@ -196,5 +235,6 @@ namespace web_parsers
                 }
             }
         }
+
     }
 }
